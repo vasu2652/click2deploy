@@ -1,0 +1,22 @@
+{
+    "uat": {
+        "servers": "dev@dev.sayint.ai"
+    },
+    "default": {
+        "deployTo": "/mnt/devel/shipit/lib/sy-lib-webapp",
+        "repositoryUrl": "git@gitlab.com:vasudev2652/sy-lib-webapp.git",
+        "ignores": [
+            ".git",
+            "node_modules"
+        ],
+        "keepReleases": 2,
+        "shallowClone": true,
+        "RequireSSHKey": false,
+        "branch": "master",
+        "verboseSSHLevel": 0,
+        "deleteOnRollback": false,
+        "environment": "uat",
+        "servers": "dev@dev.sayint.ai",
+        "bashFilePath": "./restart.sh"
+    }
+}
