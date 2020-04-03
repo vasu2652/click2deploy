@@ -9,20 +9,25 @@ Elegant CLI application to Deploy
 [![License](https://img.shields.io/npm/l/click2deploy.svg)](https://github.com/cli/click2deploy/blob/master/package.json)
 
 <!-- toc -->
+* [installation](#install)
 * [Usage](#usage)
 * [Commands](#commands)
+<!-- tocstop -->
+# Install
+```
+$ npm install click2deploy
+```
 <!-- tocstop -->
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g click2deploy
+
 $ click2deploy COMMAND
-running command...
+
 $ click2deploy (-v|--version|version)
-click2deploy/0.0.0 linux-x64 node-v10.18.0
+
 $ click2deploy --help [COMMAND]
-USAGE
-  $ click2deploy COMMAND
+
 ...
 ```
 <!-- usagestop -->
@@ -33,27 +38,25 @@ USAGE
 
 ## `click2deploy deploy`
 
-Elegant Deployment: Configure in less than Minute
+When executed, will prompt you a bunch of questions which all are mandatory to complete the deployment of the application.
+
+Alternatively you can provide the absolute path of the existing config file in json format exactly in
+the below format.
+
+click2deploy internally uses shipit module and acts a wrapper to simplify deployment of any application with very less configuration.
+
 
 ```
-USAGE
+#USAGE
   $ click2deploy deploy
-
+```
+```
 OPTIONS
   -c, --config=config  Absolute Path of the Config File
-
-DESCRIPTION
+```
+```
+CONFIG FILE
   ...
-  click2deploy is a CLI based application which can be used to deploy any github, gitlab, bitbucket codebases to deploy 
-  easily just by configuring few parameters.
-
-  click2deploy internally uses shipit-deploy module and acts a wrapper to simplify deployment of any application with 
-  very less configuration
-
-  click2deploy requires a json config file to deploy the application.
-
-  The sample config file looks like below json file
-
   { 
      "default": {
          "deployTo": "Directory where the code will be deployed on remote servers.",
@@ -71,21 +74,11 @@ DESCRIPTION
          "verboseSSHLevel":SSH verbosity level to use when connecting to remote servers. 0 (none), 1 (-v), 2 (-vv), 3 
   (-vvv),
      },
-     "dev": {
-         "branch": "master",
-         "Key": "Path to SSH key.",
-         "servers": "dev@dev.server.com"
-     },
      "uat": {
        "branch": "master",
        "Key": "Path to SSH key.",
        "servers": "uat@uat.server.com"
-  },
-     "prod": {
-       "branch": "master",
-       "Key": "Path to SSH key.",
-       "servers": "prod@prod.server.com"
-     }
+  }
   }
 ```
 
