@@ -6,7 +6,7 @@
   "bin": {
     "click2deploy": "./bin/run"
   },
-  "bugs": "https://github.com/cli/click2deploy/issues",
+  "bugs": "https://github.com/vasu2652/click2deploy/issues",
   "dependencies": {
     "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.14.0",
@@ -33,7 +33,7 @@
     "/oclif.manifest.json",
     "/src"
   ],
-  "homepage": "https://github.com/cli/click2deploy",
+  "homepage": "https://github.com/vasu2652/click2deploy",
   "keywords": [
     "oclif"
   ],
@@ -46,7 +46,7 @@
       "@oclif/plugin-help"
     ]
   },
-  "repository": "cli/click2deploy",
+  "repository": "vasu2652/click2deploy",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint .",
