@@ -107,45 +107,20 @@ class DeployCommand extends Command {
 
 DeployCommand.description = `Elegant Deployment: Configure in less than Minute
 ...
-click2deploy is a CLI based application which can be used to deploy any github, gitlab, bitbucket codebases to deploy easily just by configuring few parameters.
+When executed, will prompt you a bunch of questions which all are mandatory to complete the deployment of the application.
 
-click2deploy internally uses shipit-deploy module and acts a wrapper to simplify deployment of any application with very less configuration
+Alternatively you can provide the absolute path of the existing [` config file`](###CONFIG-FILE) in json format exactly in
+the below format.
 
-click2deploy requires a json config file to deploy the application.
+click2deploy internally uses shipit module and acts a wrapper to simplify deployment of any application with very less configuration. For complete documentation follow
+...
+How It Works
 
-The sample config file looks like below json file
+click2deploy pulls the latest code from provided git url and copies into the provided remote directory.
+After copying it executes a bash file which is present in the remote server. 
+You can maintain the bash file to build application, install dependencies, start the process.
 
-{ 
-  "default": {
-      "deployTo": "Directory where the code will be deployed on remote servers.",
-      "repositoryUrl": "Repository URL to clone, must be defined using https or git+ssh format.",
-      "ignores": [
-          "List of files excluded in copyFromRemote or copyToRemote methods."
-      ],
-      "rsync": [
-          "--del"
-      ],
-      "keepReleases": "Number of Releases Which you wish to maintain in the Server to Rollback if there is an error in current release deployment",
-      "shallowClone": "Clone only the last commit of the repository(Type: Boolean, default true)",
-      "branch": "Git Branch",
-      "verboseSSHLevel":SSH verbosity level to use when connecting to remote servers. 0 (none), 1 (-v), 2 (-vv), 3 (-vvv),
-  },
-  "dev": {
-      "branch": "master",
-      "Key": "Path to SSH key.",
-      "servers": "dev@dev.server.com"
-  },
-  "uat": {
-    "branch": "master",
-    "Key": "Path to SSH key.",
-    "servers": "uat@uat.server.com"
-},
-  "prod": {
-    "branch": "master",
-    "Key": "Path to SSH key.",
-    "servers": "prod@prod.server.com"
-  }
-}
+https://github.com/vasu2652/click2deploy
 `
 
 DeployCommand.flags = {
