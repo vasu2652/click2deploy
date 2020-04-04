@@ -49,7 +49,7 @@ class DeployCommand extends Command {
         }
       } else {
         let configGenerator = async () => {
-          const questionsJSON = JSON.parse(fs.readFileSync('./lib/questions.json'))
+          const questionsJSON = JSON.parse(fs.readFileSync('./src/questions.json'))
           let questions = Object.keys(questionsJSON).reduce((agg, key) => {
             let when = true;
             if (questionsJSON[key]['depends_on'] && questionsJSON[key]['depends_on'].length) {
