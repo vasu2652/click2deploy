@@ -3,6 +3,72 @@ const Shipit = require('../../lib/shipit')
 const initDeploy = require('shipit-deploy')
 const inquirer = require('inquirer')
 const fs = require('fs')
+const QUESTIONS ={
+    
+  "deployTo": {
+      "type": "String",
+      "message": "Define the remote path where the project will be deployed. A directory releases is automatically created. A symlink current is linked to the current release"
+  },
+  "repositoryUrl": {
+      "type": "String",
+      "message": "Git URL of the project repository."
+  },
+  "ignores":{
+      "type": "String",
+      "message":
+        "An list of comma seperate paths that match ignored files(Eg .git,node_modules,static)",
+      "default": [".git"]
+  },
+  "keepReleases": {
+      "type": "number",
+      "message": "Number of releases to keep on the remote server.",
+      "default": 2
+  },
+  "shallowClone": {
+      "type": "confirm",
+      "message": "Perform a shallow clone",
+      "default": true
+  },
+  "RequireSSHKey": {
+      "type": "confirm",
+      "message": "SSH key to login to remote server",
+      "default": true
+  },
+  "key": {
+      "type": "String",
+      "message": "Path to SSH key",
+      "depends_on": [
+          "RequireSSHKey"
+      ]
+  },
+  "branch": {
+      "type": "String",
+      "message": "Tag, branch or commit to deploy."
+  },
+  "verboseSSHLevel": {
+      "type": "number",
+      "message": "SSH verbosity level to use when connecting to remote servers. 0 (none), 1 (-v), 2 (-vv), 3 (-vvv).",
+      "default": 0
+  },
+  "deleteOnRollback": {
+      "type": "confirm",
+      "message": "Delete release when a rollback is done.",
+      "default": false
+  },
+  "environment": {
+      "type": "String",
+      "message": "Name of Deployment Environment",
+      "default": "uat"
+  },
+  "servers": {
+      "type": "String",
+      "message": "Remote Server Info -> user@host"
+  },
+  "bashFilePath":{
+      "type": "String",
+      "message":"Bash File which you want to execute on the remote server to build, start process(PM2)"
+  }
+}
 class DeployCommand extends Command {
   async exit(code) {
     if (process.platform === 'win32' && process.stdout.bufferSize) {
@@ -49,7 +115,8 @@ class DeployCommand extends Command {
         }
       } else {
         let configGenerator = async () => {
-          const questionsJSON = JSON.parse(fs.readFileSync('./src/questions.json'))
+          //const questionsJSON = JSON.parse(fs.readFileSync('./src/questions.json'))
+          const questionsJSON = QUESTIONS;
           let questions = Object.keys(questionsJSON).reduce((agg, key) => {
             let when = true;
             if (questionsJSON[key]['depends_on'] && questionsJSON[key]['depends_on'].length) {
