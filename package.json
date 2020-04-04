@@ -1,7 +1,7 @@
 {
   "name": "click2deploy",
   "description": "Elegant application to Deploy",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "vasudev",
   "bin": {
     "click2deploy": "./bin/run"
@@ -41,10 +41,7 @@
   "main": "src/index.js",
   "oclif": {
     "commands": "./src/commands",
-    "bin": "click2deploy",
-    "plugins": [
-      "@oclif/plugin-help"
-    ]
+    "bin": "click2deploy"
   },
   "repository": "vasu2652/click2deploy",
   "scripts": {
