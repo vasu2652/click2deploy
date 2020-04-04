@@ -171,5 +171,3 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help]
-<!-- commandsstop -->
