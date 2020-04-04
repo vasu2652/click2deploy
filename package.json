@@ -35,7 +35,7 @@
   ],
   "homepage": "https://github.com/vasu2652/click2deploy",
   "keywords": [
-    "oclif"
+    "deploy","nodejs","javascript"
   ],
   "license": "MIT",
   "main": "src/index.js",
