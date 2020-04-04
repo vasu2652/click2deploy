@@ -171,7 +171,13 @@ class DeployCommand extends Command {
   }
 }
 
-DeployCommand.description = `For documentation https://github.com/vasu2652/click2deploy`
+DeployCommand.description = `For documentation https://github.com/vasu2652/click2deploy
+When executed, will prompt you a bunch of questions which all are mandatory to complete the deployment of the application.
+
+Alternatively you can provide the absolute path of the existing in json format.
+
+click2deploy internally uses shipit module and acts a wrapper to simplify deployment of any application with very less configuration.
+`
 
 DeployCommand.flags = {
   config: flags.string({ char: 'c', description: 'Absolute Path of the Config File' }),
