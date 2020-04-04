@@ -49,7 +49,7 @@ class DeployCommand extends Command {
         }
       } else {
         let configGenerator = async () => {
-          const questionsJSON = JSON.parse(fs.readFileSync('questions.json'))
+          const questionsJSON = JSON.parse(fs.readFileSync('./lib/questions.json'))
           let questions = Object.keys(questionsJSON).reduce((agg, key) => {
             let when = true;
             if (questionsJSON[key]['depends_on'] && questionsJSON[key]['depends_on'].length) {
@@ -105,23 +105,7 @@ class DeployCommand extends Command {
   }
 }
 
-DeployCommand.description = `Elegant Deployment: Configure in less than Minute
-...
-When executed, will prompt you a bunch of questions which all are mandatory to complete the deployment of the application.
-
-Alternatively you can provide the absolute path of the existing [` config file`](###CONFIG-FILE) in json format exactly in
-the below format.
-
-click2deploy internally uses shipit module and acts a wrapper to simplify deployment of any application with very less configuration. For complete documentation follow
-...
-How It Works
-
-click2deploy pulls the latest code from provided git url and copies into the provided remote directory.
-After copying it executes a bash file which is present in the remote server. 
-You can maintain the bash file to build application, install dependencies, start the process.
-
-https://github.com/vasu2652/click2deploy
-`
+DeployCommand.description = `For documentation https://github.com/vasu2652/click2deploy`
 
 DeployCommand.flags = {
   config: flags.string({ char: 'c', description: 'Absolute Path of the Config File' }),

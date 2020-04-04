@@ -1,7 +1,7 @@
 {
   "name": "click2deploy",
-  "description": "Elegant application to Deploy",
-  "version": "0.0.1",
+  "description": "CLI Application To Deploy your JavaScript apps",
+  "version": "0.0.3",
   "author": "vasudev",
   "bin": {
     "click2deploy": "./bin/run"
