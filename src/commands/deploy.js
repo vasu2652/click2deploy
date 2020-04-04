@@ -1,5 +1,5 @@
 const { Command, flags } = require('@oclif/command')
-const Shipit = require('../../lib/shipit')
+const Shipit = require('../lib/shipit')
 const initDeploy = require('shipit-deploy')
 const inquirer = require('inquirer')
 const fs = require('fs')
@@ -115,7 +115,6 @@ class DeployCommand extends Command {
         }
       } else {
         let configGenerator = async () => {
-          //const questionsJSON = JSON.parse(fs.readFileSync('./src/questions.json'))
           const questionsJSON = QUESTIONS;
           let questions = Object.keys(questionsJSON).reduce((agg, key) => {
             let when = true;
