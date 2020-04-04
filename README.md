@@ -37,7 +37,7 @@ $ click2deploy --help [COMMAND]
 
 When executed, will prompt you a bunch of questions which all are mandatory to complete the deployment of the application.
 
-Alternatively you can provide the absolute path of the existing [` config file`](###CONFIG-FILE) in json format exactly in
+Alternatively you can provide the absolute path of the existing [` config file`](#CONFIG-FILE) in json format exactly in
 the below format.
 
 click2deploy internally uses shipit module and acts a wrapper to simplify deployment of any application with very less configuration.
@@ -128,7 +128,7 @@ This can be used to
 3.Start the process using pm2 etc..
 Check How it works Section to understand
 <!-- head-->
-### CONFIG FILE
+### `CONFIG FILE`
 <!-- head-->
 ```
   {
