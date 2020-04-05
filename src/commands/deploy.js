@@ -7,7 +7,7 @@ const util = require('util')
 const readDir = util.promisify(fs.readdir)
 const path = require('path')
 const configGenerator = async () => {
-  const questionsJSON = JSON.parse(fs.readFileSync(path.join(__dirname, '..','lib',questions.json)));
+  const questionsJSON = JSON.parse(fs.readFileSync(path.join(__dirname, '..','lib','questions.json')));
   let questions = Object.keys(questionsJSON).reduce((agg, key) => {
     let when = true;
     if (questionsJSON[key]['depends_on'] && questionsJSON[key]['depends_on'].length) {
