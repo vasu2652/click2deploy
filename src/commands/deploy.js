@@ -29,19 +29,40 @@ const configGenerator = async () => {
     },
     default: {
       ...answers,
-      ignores: answers['ignores'].split(',')
+      ignores: answers['ignores'].includes(',') ? answers['ignores'].split(',') : []
     }
   }
   delete shipit_config.default.RequireSSHKey
-  delete shipit_config.default.environment
   delete shipit_config.default.servers
   return shipit_config
 }
 const generateChoice = async (files) => {
   return files
 }
-const validateConfig = async () => {
-
+const validateConfig = (shipit_config) => {
+  const actual = {
+    "dev": {
+      "servers": "dev@dev.sayint.ai"
+    },
+    "default": {
+      "deployTo": "/mnt/resources/api-server/sy-live-demo-api-server",
+      "repositoryUrl": "git@gitlab.com:sy-ux/sy-api-store-ux.git",
+      "ignores": [],
+      "keepReleases": 2,
+      "shallowClone": true,
+      "branch": "dev",
+      "verboseSSHLevel": 0,
+      "deleteOnRollback": false,
+      "bashFilePath": "./restart.sh",
+      "environment": "dev"
+    }
+  }
+  if(shipit_config.default && shipit_config[shipit_config.default.environment] && shipit_config[shipit_config.default.environment].servers && (Object.keys(shipit_config.default).sort((a,b)=>a-b).toString() === Object.keys(actual['default']).sort((a,b)=>a-b).toString())){
+    return true;
+  }
+  else {
+    return false
+  }
 }
 class DeployCommand extends Command {
   async exit(code) {
@@ -71,8 +92,8 @@ class DeployCommand extends Command {
       shipit.log('Applications have been restarted')
     })
     shipit.initialize();
-    shipit.on('task_err', () => exit(1))
-    shipit.on('task_not_found', () => exit(1))
+    shipit.on('task_err', () => this.exit(1))
+    shipit.on('task_not_found', () => this.exit(1))
     shipit.start(['deploy'])
   }
   async run() {
@@ -123,7 +144,7 @@ class DeployCommand extends Command {
             if (shipit_config.default.saveConfig) {
               config_path = config_path.replace('Create New', shipit_config.default.configFileName)
               config_path = config_path.endsWith('.json') ? config_path : `${config_path}.json`;
-              delete shipit_config.default.configFileName 
+              delete shipit_config.default.configFileName
               fs.writeFile(config_path, JSON.stringify(shipit_config, null, 4), () => this.log('Shipit Config File Created', shipit_config))
             }
           }
@@ -133,16 +154,21 @@ class DeployCommand extends Command {
           if (shipit_config.default.saveConfig) {
             config_path = config_path.replace('Create New', shipit_config.default.configFileName)
             config_path = config_path.endsWith('.json') ? config_path : `${config_path}.json`;
-            delete shipit_config.default.configFileName 
+            delete shipit_config.default.configFileName
             fs.writeFile(config_path, JSON.stringify(shipit_config, null, 4), () => this.log('Shipit Config File Created', shipit_config))
           }
           else {
             delete shipit_config.default.saveConfig
-          } 
+          }
         }
       }
-      this.log(shipit_config)
-      //this.deploy(shipit_config, shipit_config.default.environment)
+      if(validateConfig(shipit_config)){
+        this.deploy(shipit_config, shipit_config.default.environment)
+      }
+      else {
+        this.log('Invalid Config file provided')
+      }
+      
     } catch (error) {
       this.log(error.message, error)
     }

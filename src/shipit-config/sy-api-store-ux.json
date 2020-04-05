@@ -1,0 +1,18 @@
+{
+    "dev": {
+        "servers": "dev@dev.sayint.ai"
+    },
+    "default": {
+        "deployTo": "/mnt/resources/api-server/sy-live-demo-api-server",
+        "repositoryUrl": "git@gitlab.com:sy-ux/sy-api-store-ux.git",
+        "ignores": [],
+        "keepReleases": 2,
+        "shallowClone": true,
+        "branch": "dev",
+        "verboseSSHLevel": 0,
+        "deleteOnRollback": false,
+        "bashFilePath": "./restart.sh",
+        "environment":"dev",
+        "saveConfig": true
+    }
+}
