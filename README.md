@@ -44,9 +44,9 @@ click2deploy internally uses shipit module and acts a wrapper to simplify deploy
 
 <!--head-->
 ## How It Works
-click2deploy pulls the latest code from provided git url and copies into the provided remote directory.
+click2deploy pulls the latest code from provided git url and copies into the remote directory.
 After copying it executes a bash file which is present in the remote server. 
-You can maintain the bash file to build application, install dependencies, start the process.
+You can maintain the bash file to build application, install dependencies, start the process(PM2).
 <!--head-->
 <!-- head-->
 ### Usage

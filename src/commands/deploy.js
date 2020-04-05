@@ -5,6 +5,7 @@ const inquirer = require('inquirer')
 const fs = require('fs')
 const util = require('util')
 const readDir = util.promisify(fs.readdir)
+const path = require('path')
 const configGenerator = async () => {
   const questionsJSON = JSON.parse(fs.readFileSync('./src/lib/questions.json'));
   let questions = Object.keys(questionsJSON).reduce((agg, key) => {
@@ -119,7 +120,8 @@ class DeployCommand extends Command {
          * If a user selects an existing config show user the config file and ask if he wants to continue or create a new one.
          * After creating a new one save it with the filename he provides
          */
-        const files = await readDir('./src/shipit-config/')
+        let basePath = path.join(__dirname,'..','shipit-config')
+        const files = await readDir(basePath)
         let choice = await inquirer.prompt([
           {
             type: 'list',
@@ -128,7 +130,7 @@ class DeployCommand extends Command {
             choices: [...await generateChoice(files), 'Create New']
           }
         ])
-        config_path = `./src/shipit-config/${choice.selectedConfig}`
+        config_path = `${basePath}/${choice.selectedConfig}`
         if (fs.existsSync(config_path)) {
           shipit_config = JSON.parse(fs.readFileSync(config_path))
           this.log(shipit_config)
