@@ -59,10 +59,6 @@ const validateConfig = (shipit_config) => {
       "bashFilePath": "./restart.sh"
     }
   }
-  console.log(shipit_config.default?true:false)
-  console.log(shipit_config[shipit_config.default.environment]?true:false)
-  console.log(shipit_config[shipit_config.default.environment].servers?true:false)
-  console.log((Object.keys(shipit_config.default).sort((a,b)=>a-b).toString() === Object.keys(actual['default']).sort((a,b)=>a-b).toString())?true:false)
   if(shipit_config.default && shipit_config[shipit_config.default.environment] && shipit_config[shipit_config.default.environment].servers && (Object.keys(shipit_config.default).sort((a,b)=>a-b).toString() === Object.keys(actual['default']).sort((a,b)=>a-b).toString())){
     return true;
   }
