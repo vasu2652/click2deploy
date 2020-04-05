@@ -35,6 +35,7 @@ const configGenerator = async () => {
   }
   delete shipit_config.default.RequireSSHKey
   delete shipit_config.default.servers
+  delete shipit_config.default.saveConfig
   return shipit_config
 }
 const generateChoice = async (files) => {
@@ -43,21 +44,25 @@ const generateChoice = async (files) => {
 const validateConfig = (shipit_config) => {
   const actual = {
     "dev": {
-      "servers": "dev@dev.sayint.ai"
+      "servers": "dev@dev.host.ai"
     },
     "default": {
-      "deployTo": "/mnt/resources/api-server/sy-live-demo-api-server",
-      "repositoryUrl": "git@gitlab.com:sy-ux/sy-api-store-ux.git",
+      "deployTo": "/mnt/resources/api-server/demo-api-server",
+      "repositoryUrl": "git@gitlab.com:repo.git",
       "ignores": [],
       "keepReleases": 2,
       "shallowClone": true,
       "branch": "dev",
       "verboseSSHLevel": 0,
       "deleteOnRollback": false,
-      "bashFilePath": "./restart.sh",
-      "environment": "dev"
+      "environment": "dev",
+      "bashFilePath": "./restart.sh"
     }
   }
+  console.log(shipit_config.default?true:false)
+  console.log(shipit_config[shipit_config.default.environment]?true:false)
+  console.log(shipit_config[shipit_config.default.environment].servers?true:false)
+  console.log((Object.keys(shipit_config.default).sort((a,b)=>a-b).toString() === Object.keys(actual['default']).sort((a,b)=>a-b).toString())?true:false)
   if(shipit_config.default && shipit_config[shipit_config.default.environment] && shipit_config[shipit_config.default.environment].servers && (Object.keys(shipit_config.default).sort((a,b)=>a-b).toString() === Object.keys(actual['default']).sort((a,b)=>a-b).toString())){
     return true;
   }

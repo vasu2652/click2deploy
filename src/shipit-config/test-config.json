@@ -1,0 +1,20 @@
+{
+    "dev": {
+        "servers": "dev@dev.host.ai"
+    },
+    "default": {
+        "deployTo": "/mnt/data/",
+        "repositoryUrl": "repo.git",
+        "ignores": [
+            ".git",
+            "node_modules"
+        ],
+        "keepReleases": 2,
+        "shallowClone": true,
+        "branch": "master",
+        "verboseSSHLevel": 0,
+        "deleteOnRollback": false,
+        "environment": "dev",
+        "bashFilePath": "./restart.sh"
+    }
+}
