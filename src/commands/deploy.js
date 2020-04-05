@@ -3,71 +3,45 @@ const Shipit = require('../lib/shipit')
 const initDeploy = require('shipit-deploy')
 const inquirer = require('inquirer')
 const fs = require('fs')
-const QUESTIONS ={
-    
-  "deployTo": {
-      "type": "String",
-      "message": "Define the remote path where the project will be deployed. A directory releases is automatically created. A symlink current is linked to the current release"
-  },
-  "repositoryUrl": {
-      "type": "String",
-      "message": "Git URL of the project repository."
-  },
-  "ignores":{
-      "type": "String",
-      "message":
-        "An list of comma seperate paths that match ignored files(Eg .git,node_modules,static)",
-      "default": [".git"]
-  },
-  "keepReleases": {
-      "type": "number",
-      "message": "Number of releases to keep on the remote server.",
-      "default": 2
-  },
-  "shallowClone": {
-      "type": "confirm",
-      "message": "Perform a shallow clone",
-      "default": true
-  },
-  "RequireSSHKey": {
-      "type": "confirm",
-      "message": "SSH key to login to remote server",
-      "default": true
-  },
-  "key": {
-      "type": "String",
-      "message": "Path to SSH key",
-      "depends_on": [
-          "RequireSSHKey"
-      ]
-  },
-  "branch": {
-      "type": "String",
-      "message": "Tag, branch or commit to deploy."
-  },
-  "verboseSSHLevel": {
-      "type": "number",
-      "message": "SSH verbosity level to use when connecting to remote servers. 0 (none), 1 (-v), 2 (-vv), 3 (-vvv).",
-      "default": 0
-  },
-  "deleteOnRollback": {
-      "type": "confirm",
-      "message": "Delete release when a rollback is done.",
-      "default": false
-  },
-  "environment": {
-      "type": "String",
-      "message": "Name of Deployment Environment",
-      "default": "uat"
-  },
-  "servers": {
-      "type": "String",
-      "message": "Remote Server Info -> user@host"
-  },
-  "bashFilePath":{
-      "type": "String",
-      "message":"Bash File which you want to execute on the remote server to build, start process(PM2)"
+const util = require('util')
+const readDir = util.promisify(fs.readdir)
+const configGenerator = async () => {
+  const questionsJSON = JSON.parse(fs.readFileSync('./src/lib/questions.json'));
+  let questions = Object.keys(questionsJSON).reduce((agg, key) => {
+    let when = true;
+    if (questionsJSON[key]['depends_on'] && questionsJSON[key]['depends_on'].length) {
+
+      when = (answers) => questionsJSON[key].depends_on.map(ele => answers[ele]).includes(false) ? false : true
+    }
+    return [
+      ...agg,
+      {
+        ...questionsJSON[key],
+        name: key,
+        when
+      }
+    ]
+  }, [])
+  const answers = await inquirer.prompt(questions)
+  let shipit_config = {
+    [answers['environment']]: {
+      servers: answers['servers']
+    },
+    default: {
+      ...answers,
+      ignores: answers['ignores'].split(',')
+    }
   }
+  delete shipit_config.default.RequireSSHKey
+  delete shipit_config.default.environment
+  delete shipit_config.default.servers
+  return shipit_config
+}
+const generateChoice = async (files) => {
+  return files
+}
+const validateConfig = async () => {
+
 }
 class DeployCommand extends Command {
   async exit(code) {
@@ -106,45 +80,36 @@ class DeployCommand extends Command {
       const { flags } = this.parse(DeployCommand)
       this.log(flags)
       let shipit_config = {};
+      let config_path;
+      //check if a config file path is provided
       if (flags.config) {
+        //check if the file path is valid
         if (fs.existsSync(flags.config)) {
+          //validate the config file 
           shipit_config = JSON.parse(fs.readFileSync(flags.config))
         }
         else {
           throw new Error('Please Provide a Valid File Path')
         }
-      } else {
-        let configGenerator = async () => {
-          const questionsJSON = QUESTIONS;
-          let questions = Object.keys(questionsJSON).reduce((agg, key) => {
-            let when = true;
-            if (questionsJSON[key]['depends_on'] && questionsJSON[key]['depends_on'].length) {
-
-              when = (answers) => questionsJSON[key].depends_on.map(ele => answers[ele]).includes(false) ? false : true
-            }
-            return [
-              ...agg,
-              {
-                ...questionsJSON[key],
-                name: key,
-                when
-              }
-            ]
-          }, [])
-          const answers = await inquirer.prompt(questions)
-          return {
-            [answers['environment']]: {
-              servers: answers['servers']
-            },
-            default: {
-              ...answers,
-              ignores: answers['ignores'].split(',')
-            }
+      }
+      else {
+        /**
+         * Show user list of config's which are already present and ask user to select one or last option would be create a new one.
+         * If a user selects an existing config show user the config file and ask if he wants to continue or create a new one.
+         * After creating a new one save it with the filename he provides
+         */
+        const files = await readDir('./src/shipit-config/')
+        let choice = await inquirer.prompt([
+          {
+            type: 'list',
+            name: 'selectedConfig',
+            message: 'Select the Existing config or Create a New one.',
+            choices: [...await generateChoice(files), 'Create New']
           }
-        }
-
-        if (fs.existsSync('./shipit-config.json')) {
-          shipit_config = JSON.parse(fs.readFileSync('./shipit-config.json'))
+        ])
+        config_path = `./src/shipit-config/${choice.selectedConfig}`
+        if (fs.existsSync(config_path)) {
+          shipit_config = JSON.parse(fs.readFileSync(config_path))
           this.log(shipit_config)
           let choice = await inquirer.prompt([
             {
@@ -155,32 +120,40 @@ class DeployCommand extends Command {
           ]);
           if (!choice.val) {
             shipit_config = await configGenerator()
-            fs.writeFile('./shipit-config.json', JSON.stringify(shipit_config, null, 4))
+            if (shipit_config.default.saveConfig) {
+              config_path = config_path.replace('Create New', shipit_config.default.configFileName)
+              config_path = config_path.endsWith('.json') ? config_path : `${config_path}.json`;
+              delete shipit_config.default.configFileName 
+              fs.writeFile(config_path, JSON.stringify(shipit_config, null, 4), () => this.log('Shipit Config File Created', shipit_config))
+            }
           }
         }
         else {
           shipit_config = await configGenerator()
-          fs.writeFile('./shipit-config.json', JSON.stringify(shipit_config, null, 4), () => this.log('Shipit Config File Created', shipit_config))
+          if (shipit_config.default.saveConfig) {
+            config_path = config_path.replace('Create New', shipit_config.default.configFileName)
+            config_path = config_path.endsWith('.json') ? config_path : `${config_path}.json`;
+            delete shipit_config.default.configFileName 
+            fs.writeFile(config_path, JSON.stringify(shipit_config, null, 4), () => this.log('Shipit Config File Created', shipit_config))
+          }
+          else {
+            delete shipit_config.default.saveConfig
+          } 
         }
       }
-
-      this.deploy(shipit_config, shipit_config.default.environment)
+      this.log(shipit_config)
+      //this.deploy(shipit_config, shipit_config.default.environment)
     } catch (error) {
       this.log(error.message, error)
     }
   }
 }
 
-DeployCommand.description = `For documentation https://github.com/vasu2652/click2deploy
-When executed, will prompt you a bunch of questions which all are mandatory to complete the deployment of the application.
-
-Alternatively you can provide the absolute path of the existing in json format.
-
-click2deploy internally uses shipit module and acts a wrapper to simplify deployment of any application with very less configuration.
-`
+DeployCommand.description = `For documentation https://github.com/vasu2652/click2deploy`
 
 DeployCommand.flags = {
   config: flags.string({ char: 'c', description: 'Absolute Path of the Config File' }),
+  filename: flags.string({ char: 'f', description: 'Config file name which you have created before' }),
 }
 
 module.exports = DeployCommand

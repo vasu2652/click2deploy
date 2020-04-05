@@ -62,5 +62,16 @@
     "bashFilePath":{
         "type": "String",
         "message":"Bash File which you want to execute on the remote server to build, start process(PM2)"
+    },
+    "saveConfig":{
+        "type":"confirm",
+        "message":"Do you want to save this config file(Y/n)?"
+    },
+    "configFileName":{
+        "type":"String",
+        "message":"Enter the name of the config file with which you want to save?",
+        "depends_on": [
+            "saveConfig"
+        ]
     }
   }

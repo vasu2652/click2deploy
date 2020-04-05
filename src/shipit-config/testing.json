@@ -1,0 +1,20 @@
+{
+    "uat": {
+        "servers": ""
+    },
+    "default": {
+        "deployTo": "test",
+        "repositoryUrl": "test",
+        "ignores": [
+            "test"
+        ],
+        "keepReleases": 1,
+        "shallowClone": true,
+        "key": "",
+        "branch": "",
+        "verboseSSHLevel": 0,
+        "deleteOnRollback": false,
+        "bashFilePath": "./restart.sh",
+        "saveConfig": true
+    }
+}
