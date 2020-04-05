@@ -2,7 +2,7 @@
     
     "deployTo": {
         "type": "String",
-        "message": "Define the remote path where the project will be deployed. A directory releases is automatically created. A symlink current is linked to the current release"
+        "message": "Define the remote path where the project will be deployed.( A directory releases is automatically created. A symlink current is linked to the current release)"
     },
     "repositoryUrl": {
         "type": "String",
@@ -61,7 +61,7 @@
     },
     "bashFilePath":{
         "type": "String",
-        "message":"Bash File which you want to execute on the remote server to build, start process(PM2)"
+        "message":"Path of the Bash File on the remote server which you want to execute on the remote server to build, start process(PM2)"
     },
     "saveConfig":{
         "type":"confirm",

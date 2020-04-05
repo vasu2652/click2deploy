@@ -1,10 +1,10 @@
 {
     "dev": {
-        "servers": "dev@dev.sayint.ai"
+        "servers": "dev@dev.host.ai"
     },
     "default": {
-        "deployTo": "/mnt/resources/api-server/sy-live-demo-api-server",
-        "repositoryUrl": "git@gitlab.com:sy-ux/sy-api-store-ux.git",
+        "deployTo": "/mnt/resources/api-server/demo-server",
+        "repositoryUrl": "git@gitlab.com:repository.git",
         "ignores": [],
         "keepReleases": 2,
         "shallowClone": true,
