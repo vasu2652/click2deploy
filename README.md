@@ -37,10 +37,10 @@ $ click2deploy --help [COMMAND]
 
 When executed, will prompt you a bunch of questions which all are mandatory to complete the deployment of the application.
 
-Alternatively you can provide the absolute path of the existing [` config file`](#CONFIG-FILE) in JSON format exactly in
+Alternatively, you can provide the absolute path of the existing [` config file`](#CONFIG-FILE) in JSON format exactly in
 the below format.
 
-click2deploy internally uses shipit module and acts a wrapper to simplify the deployment of any application with very less configuration.
+click2deploy internally uses the shipit module and acts as a wrapper to simplify the deployment of any application with very less configuration.
 
 <!--head-->
 ## How It Works
@@ -51,9 +51,9 @@ You can maintain the bash file to build the application, install dependencies, s
 
 <!--head-->
 ## Pre-requisites
-1. Its better do ssh-copy-id from HOST system to the REMOTE system
+1. It's better to do ssh-copy-id from the HOST system to the REMOTE system
 2. Add Host system ssh key to your git account
-3. It's better to have a bash file script in your repository and provide a relative path it from the main working directory of your project.
+3. It's better to have a bash file script in your repository and provide a relative path from the main working directory of your project.
 <!--head-->
 
 <!-- head-->
@@ -85,18 +85,18 @@ Repository URL to clone, must be defined using https or git+ssh format.
 #### ignores
 <!--param-->
 [
-			"List of files excluded in copyFromRemote or copyToRemote methods."
+            "List of files excluded in copyFromRemote or copyToRemote methods."
 ]
 <!--param-->
 #### keepReleases
 <!--param-->
 Number of Releases Which you wish to maintain in the Server to Rollback if there is an error  in current release deployment ",
-		
+        
 <!--param-->
 #### shallowClone
 <!--param-->
 Clone only the last commit of the repository(Type: Boolean, default true)",
-		
+        
 <!--param-->
 #### RequireSSHKey
 <!--param-->
@@ -110,7 +110,7 @@ Git Branch
 #### verboseSSHLevel:
 <!--param-->
 SSH verbosity level to use when connecting to remote servers.0(none) 1(-v),2(-vv),3(-vvv)"
-	
+    
 <!--param-->
 #### Environment
 <!--param-->
@@ -131,34 +131,34 @@ user@host:port
 <!--param-->
 Path of bash script which will be executed afte copying the code to remote server.
 This can be used to 
-1.Build you application or Generate Executables
+1.Build your application or Generate Executables
 2.Install your dependencies
-3.Start the process using pm2 etc..
+3. Start the process using pm2 etc..
 Check How it works Section to understand
 <!-- head-->
 ### `CONFIG FILE`
 <!-- head-->
 ```
   {
-	"default": {
-		"deployTo": "Directory where the code will be deployed on remote servers.",
-		"repositoryUrl": "Repository URL to clone, must be defined using https or git+ssh format.",
-		"ignores": [
-			"List of files excluded in copyFromRemote or copyToRemote methods."
-		],
-		"rsync": [
-			"--del"
-		],
-		"keepReleases": "Number of Releases Which you wish to maintain in the Server to Rollback if there is an error  in current release deployment ",
-		"shallowClone": "Clone only the last commit of the repository(Type: Boolean, default true)",
-		"branch": "Git Branch",
-		"verboseSSHLevel": "SSH verbosity level to use when connecting to remote servers.0(none) 1(-v),2(-vv),3(-vvv)"
-	},
-	"uat": {
-		"branch": "master",
-		"Key": "Path to SSH key.",
-		"servers": "uat@uat.server.com"
-	}
+    "default": {
+        "deployTo": "Directory where the code will be deployed on remote servers.",
+        "repositoryUrl": "Repository URL to clone, must be defined using https or git+ssh format.",
+        "ignores": [
+            "List of files excluded in copyFromRemote or copyToRemote methods."
+        ],
+        "rsync": [
+            "--del"
+        ],
+        "keepReleases": "Number of Releases Which you wish to maintain in the Server to Rollback if there is an error  in current release deployment ",
+        "shallowClone": "Clone only the last commit of the repository(Type: Boolean, default true)",
+        "branch": "Git Branch",
+        "verboseSSHLevel": "SSH verbosity level to use when connecting to remote servers.0(none) 1(-v),2(-vv),3(-vvv)"
+    },
+    "uat": {
+        "branch": "master",
+        "Key": "Path to SSH key.",
+        "servers": "uat@uat.server.com"
+    }
 }
 ```
 
