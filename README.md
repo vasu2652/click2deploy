@@ -37,17 +37,25 @@ $ click2deploy --help [COMMAND]
 
 When executed, will prompt you a bunch of questions which all are mandatory to complete the deployment of the application.
 
-Alternatively you can provide the absolute path of the existing [` config file`](#CONFIG-FILE) in json format exactly in
+Alternatively you can provide the absolute path of the existing [` config file`](#CONFIG-FILE) in JSON format exactly in
 the below format.
 
-click2deploy internally uses shipit module and acts a wrapper to simplify deployment of any application with very less configuration.
+click2deploy internally uses shipit module and acts a wrapper to simplify the deployment of any application with very less configuration.
 
 <!--head-->
 ## How It Works
-click2deploy pulls the latest code from provided git url and copies into the remote directory.
+click2deploy pulls the latest code from provided git URL and copies into the remote directory.
 After copying it executes a bash file which is present in the remote server. 
-You can maintain the bash file to build application, install dependencies, start the process(PM2).
+You can maintain the bash file to build the application, install dependencies, start the process(PM2).
 <!--head-->
+
+<!--head-->
+## Pre-requisites
+1. Its better do ssh-copy-id from HOST system to the REMOTE system
+2. Add Host system ssh key to your git account
+3. It's better to have a bash file script in your repository and provide a relative path it from the main working directory of your project.
+<!--head-->
+
 <!-- head-->
 ### Usage
 <!-- head-->
