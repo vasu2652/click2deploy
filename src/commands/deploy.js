@@ -172,7 +172,7 @@ class DeployCommand extends Command {
       // else {
       //   this.log('Invalid Config file provided')
       // }
-      this.deploy(shipit_config, shipit_config.default.environment)
+      this.deploy(shipit_config, shipit_config.default.bashFilePath)
     } catch (error) {
       this.log(error.message, error)
     }
