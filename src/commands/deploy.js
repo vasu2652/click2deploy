@@ -56,7 +56,7 @@ const validateConfig = (shipit_config) => {
       "verboseSSHLevel": 0,
       "deleteOnRollback": false,
       "environment": "dev",
-      "bashFilePath": "./restart.sh"
+      "saveConfig": true
     }
   }
   if(shipit_config.default && shipit_config[shipit_config.default.environment] && shipit_config[shipit_config.default.environment].servers && (Object.keys(shipit_config.default).sort((a,b)=>a-b).toString() === Object.keys(actual['default']).sort((a,b)=>a-b).toString())){
