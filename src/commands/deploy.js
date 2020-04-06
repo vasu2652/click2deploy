@@ -166,13 +166,13 @@ class DeployCommand extends Command {
           }
         }
       }
-      if(validateConfig(shipit_config)){
-        this.deploy(shipit_config, shipit_config.default.environment)
-      }
-      else {
-        this.log('Invalid Config file provided')
-      }
-      
+      // if(validateConfig(shipit_config)){
+      //   this.deploy(shipit_config, shipit_config.default.environment)
+      // }
+      // else {
+      //   this.log('Invalid Config file provided')
+      // }
+      this.deploy(shipit_config, shipit_config.default.environment)
     } catch (error) {
       this.log(error.message, error)
     }
