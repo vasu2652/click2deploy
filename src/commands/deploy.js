@@ -44,21 +44,22 @@ const generateChoice = async (files) => {
 const validateConfig = (shipit_config) => {
   const actual = {
     "dev": {
-      "servers": "dev@dev.host.ai"
+        "servers": "dev@dev.host.ai"
     },
     "default": {
-      "deployTo": "/mnt/resources/api-server/demo-api-server",
-      "repositoryUrl": "git@gitlab.com:repo.git",
-      "ignores": [],
-      "keepReleases": 2,
-      "shallowClone": true,
-      "branch": "dev",
-      "verboseSSHLevel": 0,
-      "deleteOnRollback": false,
-      "environment": "dev",
-      "saveConfig": true
+        "deployTo": "/mnt/resources/api-server/live-demo-api-server",
+        "repositoryUrl": "git@gitlab.com:ux/api-store-ux.git",
+        "ignores": [],
+        "keepReleases": 2,
+        "shallowClone": true,
+        "branch": "dev",
+        "verboseSSHLevel": 0,
+        "deleteOnRollback": false,
+        "bashFilePath": "./restart.sh",
+        "environment":"dev",
+        "saveConfig": true
     }
-  }
+}
   if(shipit_config.default && shipit_config[shipit_config.default.environment] && shipit_config[shipit_config.default.environment].servers && (Object.keys(shipit_config.default).sort((a,b)=>a-b).toString() === Object.keys(actual['default']).sort((a,b)=>a-b).toString())){
     return true;
   }
