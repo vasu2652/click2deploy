@@ -35,7 +35,6 @@ const configGenerator = async () => {
   }
   delete shipit_config.default.RequireSSHKey
   delete shipit_config.default.servers
-  delete shipit_config.default.saveConfig
   return shipit_config
 }
 const generateChoice = async (files) => {
@@ -149,6 +148,7 @@ class DeployCommand extends Command {
               config_path = config_path.replace('Create New', shipit_config.default.configFileName)
               config_path = config_path.endsWith('.json') ? config_path : `${config_path}.json`;
               delete shipit_config.default.configFileName
+              delete shipit_config.default.saveConfig
               fs.writeFileSync(config_path, JSON.stringify(shipit_config, null, 4), () => this.log('Shipit Config File Created', shipit_config))
             }
           }
@@ -159,6 +159,7 @@ class DeployCommand extends Command {
             config_path = config_path.replace('Create New', shipit_config.default.configFileName)
             config_path = config_path.endsWith('.json') ? config_path : `${config_path}.json`;
             delete shipit_config.default.configFileName
+            delete shipit_config.default.saveConfig
             fs.writeFileSync(config_path, JSON.stringify(shipit_config, null, 4), () => this.log('Shipit Config File Created', shipit_config))
           }
           else {
