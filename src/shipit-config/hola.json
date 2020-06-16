@@ -1,21 +1,25 @@
 {
+  "meta": {
+    "user": "Paloju Vasudev"
+  },
+  "config": {
     "uat": {
-        "servers": "sayint@abstract.sayint.ai"
+      "servers": "dev@dev.sayint.ai"
     },
     "default": {
-        "deployTo": "/mnt/disk1/resources/api-server/sy-live-demo-api-server",
-        "repositoryUrl": "git@gitlab.com:sy-ux/sy-api-store-ux.git",
-        "ignores": [
-            ".git",
-            "node_modules"
-        ],
-        "keepReleases": 2,
-        "shallowClone": true,
-        "key": "/home/vasudev/Downloads/id_sy_perf.pem",
-        "branch": "dev",
-        "verboseSSHLevel": 0,
-        "deleteOnRollback": false,
-        "environment": "uat",
-        "bashFilePath": "./restart.sh"
+      "deployTo": "/mnt/disk1/resources/api-server/sy-live-demo-api-server",
+      "repositoryUrl": "git@gitlab.com:sy-ux/sy-api-store-ux.git",
+      "ignores": [
+        ".git",
+        "node_modules"
+      ],
+      "keepReleases": 2,
+      "shallowClone": true,
+      "branch": "dev",
+      "verboseSSHLevel": 0,
+      "deleteOnRollback": false,
+      "environment": "uat",
+      "bashFilePath": "./restart.sh"
     }
+  }
 }

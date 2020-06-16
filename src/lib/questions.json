@@ -1,77 +1,79 @@
 {
-    
-    "deployTo": {
-        "type": "String",
-        "message": "Define the remote path where the project will be deployed.( A directory releases is automatically created. A symlink current is linked to the current release)"
-    },
-    "repositoryUrl": {
-        "type": "String",
-        "message": "Git URL of the project repository."
-    },
-    "ignores":{
-        "type": "String",
-        "message":
-          "An list of comma seperate paths that match ignored files(Eg .git,node_modules,static)",
-        "default": [".git"]
-    },
-    "keepReleases": {
-        "type": "number",
-        "message": "Number of releases to keep on the remote server.",
-        "default": 2
-    },
-    "shallowClone": {
-        "type": "confirm",
-        "message": "Perform a shallow clone",
-        "default": true
-    },
-    "RequireSSHKey": {
-        "type": "confirm",
-        "message": "SSH key to login to remote server",
-        "default": true
-    },
-    "key": {
-        "type": "String",
-        "message": "Path to SSH key",
-        "depends_on": [
-            "RequireSSHKey"
-        ]
-    },
-    "branch": {
-        "type": "String",
-        "message": "Tag, branch or commit to deploy."
-    },
-    "verboseSSHLevel": {
-        "type": "number",
-        "message": "SSH verbosity level to use when connecting to remote servers. 0 (none), 1 (-v), 2 (-vv), 3 (-vvv).",
-        "default": 0
-    },
-    "deleteOnRollback": {
-        "type": "confirm",
-        "message": "Delete release when a rollback is done.",
-        "default": false
-    },
-    "environment": {
-        "type": "String",
-        "message": "Name of Deployment Environment",
-        "default": "uat"
-    },
-    "servers": {
-        "type": "String",
-        "message": "Remote Server Info -> user@host"
-    },
-    "bashFilePath":{
-        "type": "String",
-        "message":"Path of the Bash File on the remote server which you want to execute on the remote server to build, start process(PM2)"
-    },
-    "saveConfig":{
-        "type":"confirm",
-        "message":"Do you want to save this config file(Y/n)?"
-    },
-    "configFileName":{
-        "type":"String",
-        "message":"Enter the name of the config file with which you want to save?",
-        "depends_on": [
-            "saveConfig"
-        ]
-    }
+  "deployTo": {
+    "type": "String",
+    "message": "Define the remote path where the project will be deployed.( A directory releases is automatically created. A symlink current is linked to the current release)"
+  },
+  "repositoryUrl": {
+    "type": "String",
+    "message": "Git URL of the project repository."
+  },
+  "ignores": {
+    "type": "String",
+    "message": "An list of comma seperate paths that match ignored files(Eg .git,node_modules,static)",
+    "default": [".git"]
+  },
+  "keepReleases": {
+    "type": "number",
+    "message": "Number of releases to keep on the remote server.",
+    "default": 2
+  },
+  "shallowClone": {
+    "type": "confirm",
+    "message": "Perform a shallow clone",
+    "default": true
+  },
+  "RequireSSHKey": {
+    "type": "confirm",
+    "message": "SSH key to login to remote server",
+    "default": true
+  },
+  "key": {
+    "type": "String",
+    "message": "Path to SSH key",
+    "depends_on": [
+      "RequireSSHKey"
+    ]
+  },
+  "branch": {
+    "type": "String",
+    "message": "Tag, branch or commit to deploy."
+  },
+  "verboseSSHLevel": {
+    "type": "number",
+    "message": "SSH verbosity level to use when connecting to remote servers. 0 (none), 1 (-v), 2 (-vv), 3 (-vvv).",
+    "default": 0
+  },
+  "deleteOnRollback": {
+    "type": "confirm",
+    "message": "Delete release when a rollback is done.",
+    "default": false
+  },
+  "environment": {
+    "type": "String",
+    "message": "Name of Deployment Environment",
+    "default": "uat"
+  },
+  "servers": {
+    "type": "String",
+    "message": "Remote Server Info -> user@host"
+  },
+  "bashFilePath": {
+    "type": "String",
+    "message": "Path of the Bash File on the remote server which you want to execute on the remote server to build, start the process(PM2)"
+  },
+  "localEnvFilePath": {
+    "type": "String",
+    "message": "Path of the env File le on the local machine which you want to copy to the remote server location, start the process(PM2)"
+  },
+  "saveConfig": {
+    "type": "confirm",
+    "message": "Do you want to save this config file(Y/n)?"
+  },
+  "configFileName": {
+    "type": "String",
+    "message": "Enter the name of the config file with which you want to save?",
+    "depends_on": [
+      "saveConfig"
+    ]
   }
+}
